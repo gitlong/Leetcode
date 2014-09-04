@@ -1,0 +1,37 @@
+RandomListNode *copyRandomList(RandomListNode *head) {
+    RandomListNode* first = head;
+
+    //insert each node behind and in between the other node
+    while(first)
+    {
+        RandomListNode* cp = new RandomListNode(first->val);
+        cp->next = first->next;
+        first->next = cp;
+        first = cp->next;
+    }
+
+    // update random pointer
+    RandomListNode* old = head;
+    RandomListNode* newn = head->next;
+
+    while(newn)
+    {
+        if(old->random)
+          newn->random = old->random->next;
+          else
+            newn->random = nullptr;
+    }
+
+    // recover original link and build new link
+    RandomListNode* headnew = head->next;
+    old = head;
+    newn = head->next;
+    while(newn)
+    {
+        old->next = old->next->next;
+        newn->next = newn->next->next;
+        old = old->next;
+        newn = newn->next;
+    }
+    return headnew;
+}
