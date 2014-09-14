@@ -1,0 +1,40 @@
+vector<vector<string> > solveNQueens(int n) {
+    vector<vector<string> > res;
+    vector<string> current(n, string(n,'.') );
+
+        solQueen(n, res, current);
+        return res;
+}
+
+void solQueen(int n, vector<vector<string> >& res, vector<string>& current, int row=0)
+{
+    if(row==n)
+        res.push_back(current);
+
+    for(int i=0; i<n; ++i)
+    {
+        if( validpos(row,i) )
+        {
+            current[row][i]='Q';
+            solQueen(n, res, current, row+1);
+            current[row][i]='.';
+        }
+    }
+}
+
+bool validpos(const vector<string> board, int row, int col)
+{
+        for (int i = 0; i < row; i++)
+        {
+            if (board[i][col] == 'Q') return false;
+        }
+        for (int i = row - 1, j = col - 1; i>=0 && j>=0; i--, j--)
+        {
+            if (board[i][j] == 'Q') return false;
+        }
+        for (int i = row - 1, j = col + 1; i>=0 && j<board.size(); i--, j++)
+        {
+            if (board[i][j] == 'Q') return false;
+        }
+        return true;
+}
