@@ -1,0 +1,38 @@
+// N queen II
+bool isvalid(vector<int>& queens, int row, int col)
+{
+    for (int r=0; r<row; r++)
+    {
+        int c = queens[r];
+        if ( c==col ) return false;
+        int xx = abs(r-row);
+        int yy = abs(c-col);
+
+        if (xx==yy) return false;
+    }
+    return true;
+}
+
+void queencount(vector<int>& queens, int row, int n, int &cnt)
+{
+    if (row==n)
+        cnt++;
+    else
+    {
+        for (int col=0; col<n; col++)
+        {
+            if (isvalid(queens,row,col))
+            {
+                queens[row]=col;
+                queencount(queens,row+1,n,cnt);
+            }
+
+        }
+    }
+}
+
+int totalNQueens(int n) {
+    vector<int> queens(n,0);
+    int cnt;
+    queencount(queens, 0, n, cnt);
+}
